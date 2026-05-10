@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.post('/user/login', formData);
+      const res = await api.post('/api/auth/login', formData);
       
       // Token save karna zaroori hai authentication ke liye
       localStorage.setItem('token', res.data.token);

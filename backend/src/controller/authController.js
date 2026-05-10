@@ -30,6 +30,7 @@ export const registerController = async (req, res, next) => {
 export const loginController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
       return res
         .status(400)
@@ -37,32 +38,35 @@ export const loginController = async (req, res, next) => {
     }
 
     const sql = "SELECT * FROM users WHERE email = ?";
+
     connection.query(sql, [email], async (err, results) => {
       if (err) {
         console.error("DB Error", err);
         return res.status(500).json({ message: "Database error" });
-      } else if (results.length === 0) {
+      }
+
+      if (results.length === 0) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
+
       const existingUser = results[0];
+
+      const isMatch = await bcrypt.compare(password, existingUser.password);
+
+      if (!isMatch) {
+        return res.status(401).json({
+          message: "Invalid credentials",
+        });
+      }
+
+      await genToken(existingUser, res);
+
+      res.status(200).json({
+        message: "Login successful",
+        data: existingUser,
+      });
     });
-
-    await genToken(existingUser, res);
-
-    if (!existingUser) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-    const isMatch = await bcrypt.compare(password, existingUser.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    res.status(200).json({ message: "Login successful", data: existingUser });
   } catch (error) {
     next(error);
   }
 };
-
-
-

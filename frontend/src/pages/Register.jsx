@@ -20,12 +20,12 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.post('/user/register', formData);
+      const res = await api.post('/api/auth/register', formData);
       toast.success("Account created successfully! Welcome to Traveloop.");
       navigate('/login');
     } catch (err) {
       console.error(err);
-      toast.error(err.response?.data?.message || "Signup failed. Please try again.");
+      toast.error(err.response?.data?.message || "Register failed. Please try again.");
     } finally {
       setLoading(false);
     }
