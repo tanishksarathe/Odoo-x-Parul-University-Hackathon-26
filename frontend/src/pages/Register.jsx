@@ -25,7 +25,7 @@ const Register = () => {
       navigate('/login');
     } catch (err) {
       console.error(err);
-      toast.error(err.response?.data?.message || "Signup failed. Please try again.");
+      toast.error(err.response?.data?.message || "Register failed. Please try again.");
     } finally {
       setLoading(false);
     }

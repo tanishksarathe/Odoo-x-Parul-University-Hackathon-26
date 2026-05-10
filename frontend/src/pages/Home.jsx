@@ -1,138 +1,148 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Calendar, ArrowRight, MapPin } from 'lucide-react';
-// AOS Import
+import { 
+  Plus, Calendar, ArrowRight, MapPin, 
+  TrendingUp, Wallet, ShieldCheck, Globe 
+} from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 const Home = () => {
   const navigate = useNavigate();
 
-  // AOS Initialize karna
   useEffect(() => {
-    AOS.init({
-      duration: 1000, // Animation ki speed (1 second)
-      once: true,     // Kya animation sirf ek baar hona chahiye
-      easing: 'ease-in-out',
-    });
+    AOS.init({ duration: 1000, once: true });
   }, []);
 
-  const recentTrips = [
-    { id: 1, name: "Goa Weekend", date: "12-15 June", stops: 2, image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=400" },
-    { id: 2, name: "Manali Adventure", date: "20-25 July", stops: 4, image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=400" },
-    { id: 3, name: "Leh Ladakh", date: "05-15 Aug", stops: 5, image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/51/22/a3/caption.jpg?w=600&h=400&s=1" }
-  ];
-
   return (
-    <div className="min-h-screen bg-[#f8fafc] pb-12 overflow-x-hidden">
+    <div className="min-h-screen bg-[#f8fafc] pb-20 overflow-x-hidden">
       
-      {/* 1. Hero Section - Fade Down Animation */}
-      <section 
-        className="bg-white border-b border-slate-100 py-16 mb-8"
-        data-aos="fade-down"
-      >
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-            <div data-aos="fade-right" data-aos-delay="200">
-              <h1 className="text-5xl font-black text-slate-800 leading-tight">
-                Explore the World <br />
-                With <span className="text-emerald-600">Traveloop</span>
-              </h1>
-              <p className="text-slate-500 mt-4 text-lg font-medium max-w-md">
-                Plan, manage, and share your multi-city itineraries with ease.
-              </p>
-            </div>
-            
-            <div data-aos="zoom-in" data-aos-delay="400">
+      {/* 1. Hero Section */}
+      <section className="relative bg-white pt-20 pb-32 overflow-hidden">
+        <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center gap-12">
+          <div className="flex-1 text-center lg:text-left" data-aos="fade-right">
+            <span className="inline-block px-4 py-2 bg-emerald-50 text-emerald-700 rounded-full text-sm font-bold mb-6">
+              ✨ Smart Travel Planning
+            </span>
+            <h1 className="text-6xl font-black text-slate-900 leading-tight">
+              Plan Your Next <br />
+              <span className="text-emerald-600">Masterpiece</span> Trip
+            </h1>
+            <p className="text-slate-500 mt-6 text-xl max-w-lg mx-auto lg:mx-0">
+              Traveloop helps you organize multi-city itineraries, manage budgets, and explore hidden gems.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
               <button 
                 onClick={() => navigate('/create-trip')}
-                className="group flex items-center gap-3 bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-5 rounded-2xl font-bold shadow-2xl shadow-emerald-200 transition-all transform hover:-translate-y-1 active:scale-95"
+                className="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-emerald-600 transition-all transform hover:-translate-y-1 shadow-xl"
               >
-                <Plus size={24} />
-                Start Planning
+                Start Planning Free
+              </button>
+              <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-slate-700 hover:bg-slate-50 transition-all">
+                See How it Works <ArrowRight size={18} />
+              </button>
+            </div>
+          </div>
+          
+          {/* Animated Stats Card */}
+          <div className="flex-1 relative" data-aos="zoom-in" data-aos-delay="300">
+            <div className="relative z-10 bg-white p-8 rounded-[3rem] shadow-2xl border border-slate-100">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="bg-emerald-500 p-3 rounded-2xl text-white shadow-lg shadow-emerald-200">
+                  <TrendingUp size={24} />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-400 font-bold uppercase tracking-wider">Estimated Budget</p>
+                  <p className="text-2xl font-black text-slate-800">$2,450.00</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500 w-3/4 rounded-full"></div>
+                </div>
+                <div className="flex justify-between text-sm font-bold text-slate-500">
+                  <span>Flights: 40%</span>
+                  <span>Stay: 35%</span>
+                </div>
+              </div>
+            </div>
+            {/* Background blob */}
+            <div className="absolute -top-10 -right-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-[80px]"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Quick Features Section (New) */}
+      <section className="container mx-auto px-6 -mt-16 relative z-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: <Wallet className="text-emerald-500" />, title: "Budget Tracker", desc: "Never overspend with real-time cost analysis." },
+            { icon: <Globe className="text-blue-500" />, title: "Multi-City Support", desc: "Seamlessly link multiple destinations in one plan." },
+            { icon: <ShieldCheck className="text-purple-500" />, title: "Smart Checklist", desc: "Automated packing lists based on your destination." }
+          ].map((item, i) => (
+            <div key={i} data-aos="fade-up" data-aos-delay={i * 200} className="bg-white p-8 rounded-[2rem] shadow-lg border border-slate-50 flex items-start gap-5 hover:scale-105 transition-transform">
+              <div className="bg-slate-50 p-4 rounded-2xl">{item.icon}</div>
+              <div>
+                <h3 className="font-bold text-slate-800 mb-1">{item.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. Travel Destinations (Grid) */}
+      <section className="container mx-auto px-6 mt-24">
+        <div className="flex justify-between items-end mb-12" data-aos="fade-up">
+          <div>
+            <h2 className="text-4xl font-black text-slate-800">Popular Destinations</h2>
+            <p className="text-slate-500 mt-2 font-medium">Top picks from the Traveloop community</p>
+          </div>
+          <button className="hidden sm:block px-6 py-3 border-2 border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 transition-all">
+            Explore All
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { city: 'Bali', country: 'Indonesia', img: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4' },
+            { city: 'Paris', country: 'France', img: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34' },
+            { city: 'Tokyo', country: 'Japan', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e' },
+            { city: 'Rome', country: 'Italy', img: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5' }
+          ].map((dest, i) => (
+            <div key={i} data-aos="zoom-in" data-aos-delay={i * 100} className="group relative h-80 rounded-[2.5rem] overflow-hidden cursor-pointer shadow-lg shadow-slate-200">
+              <img src={dest.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={dest.city} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div className="absolute bottom-6 left-6 text-white">
+                <h4 className="text-xl font-bold">{dest.city}</h4>
+                <p className="text-sm opacity-80">{dest.country}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. Newsletter / CTA (New) */}
+      <section className="container mx-auto px-6 mt-24" data-aos="fade-up">
+        <div className="bg-emerald-600 rounded-[3.5rem] p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-black text-white mb-6">Ready for your next journey?</h2>
+            <p className="text-emerald-50 text-lg mb-10 opacity-90 font-medium">Join 50,000+ travelers planning their dream trips today.</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
+                className="px-6 py-4 rounded-2xl bg-white/20 border border-white/30 text-white placeholder:text-emerald-100 focus:outline-none focus:bg-white focus:text-slate-900 transition-all sm:w-80"
+              />
+              <button className="bg-white text-emerald-600 px-8 py-4 rounded-2xl font-black hover:bg-slate-900 hover:text-white transition-all shadow-xl">
+                Get Updates
               </button>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="container mx-auto px-6">
-        
-        {/* 2. Recent Trips - Slide Up Animation */}
-        <div className="mb-16">
-          <div className="flex justify-between items-center mb-8" data-aos="fade-up">
-            <h2 className="text-3xl font-bold text-slate-800">Your Recent Trips</h2>
-            <button className="text-emerald-600 font-bold hover:underline">View All</button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recentTrips.map((trip, index) => (
-              <div 
-                key={trip.id} 
-                className="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500"
-                data-aos="fade-up" 
-                data-aos-delay={index * 150} // Har card thoda late aayega (Staggered effect)
-              >
-                <div className="relative h-56 overflow-hidden">
-                  <img 
-                    src={trip.image} 
-                    alt={trip.name} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
-                  />
-                  <div className="absolute top-5 left-5 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-black text-slate-800 shadow-sm">
-                    {trip.stops} STOPS
-                  </div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-slate-800 mb-3">{trip.name}</h3>
-                  <div className="flex items-center gap-2 text-slate-500 font-semibold mb-6">
-                    <Calendar size={16} className="text-emerald-500" />
-                    {trip.date}
-                  </div>
-                  <button className="w-full flex items-center justify-center gap-2 py-4 bg-slate-900 text-white group-hover:bg-emerald-600 rounded-2xl font-bold transition-all transform active:scale-95">
-                    Explore Details <ArrowRight size={18} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 3. Budget Insight Feature - Flip Animation */}
-        <div 
-          className="bg-slate-900 rounded-[3rem] p-10 md:p-16 text-white relative overflow-hidden shadow-2xl"
-          data-aos="flip-up"
-        >
-          <div className="absolute -top-10 -right-10 w-64 h-64 bg-emerald-500/20 rounded-full blur-[100px]"></div>
-          <div className="relative z-10 grid md:grid-cols-2 items-center gap-10">
-            <div>
-              <h2 className="text-4xl font-black mb-6">Track Your Budget</h2>
-              <p className="text-slate-400 mb-8 text-lg leading-relaxed">
-                Stay within your limits with our automatic cost breakdowns for transport, stays, and activities.
-              </p>
-              <div className="flex gap-4">
-                <div className="bg-white/10 p-4 rounded-2xl border border-white/5" data-aos="zoom-in" data-aos-delay="600">
-                  <p className="text-emerald-400 font-bold text-2xl">Visual</p>
-                  <p className="text-sm text-slate-300">Charts</p>
-                </div>
-                <div className="bg-white/10 p-4 rounded-2xl border border-white/5" data-aos="zoom-in" data-aos-delay="800">
-                  <p className="text-emerald-400 font-bold text-2xl">Daily</p>
-                  <p className="text-sm text-slate-300">Estimates</p>
-                </div>
-              </div>
-            </div>
-            <div className="hidden md:flex justify-center" data-aos="fade-left" data-aos-delay="500">
-               {/* Decorative Abstract Shape */}
-               <div className="w-64 h-64 border-8 border-emerald-500/30 rounded-full flex items-center justify-center animate-pulse">
-                  <div className="w-40 h-40 bg-emerald-600 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(16,185,129,0.4)]">
-                    <MapPin size={60} />
-                  </div>
-               </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
   );
 };
