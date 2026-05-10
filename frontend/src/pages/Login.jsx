@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import api from "../config/API";
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+    const { setUser, setIsLogin, setRole } = useAuth();
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -19,12 +22,19 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
+<<<<<<< HEAD
       const res = await api.post('/api/auth/login', formData);
       
       // Token save karna zaroori hai authentication ke liye
       localStorage.setItem('token', res.data.token);
       
+=======
+      const res = await api.post('/user/login', formData); 
+>>>>>>> 36245c2e778116f78dbad91de05437fde7745110
       toast.success("Welcome back! Logging you in...");
+      setUser(res.data.data);
+      setIsLogin(true);
+      sessionStorage.setItem("Traveloop", JSON.stringify(res.data.data));
       navigate('/'); // Login ke baad home ya dashboard par bhejein
     } catch (err) {
       console.error(err);

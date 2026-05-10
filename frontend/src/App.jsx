@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import CreateTrip from "./pages/CreateTrip";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,6 +18,7 @@ function App() {
         <Toaster/>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/create-trip" element={<CreateTrip />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Routes>
