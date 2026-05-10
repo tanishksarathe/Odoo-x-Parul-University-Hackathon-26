@@ -1,0 +1,10 @@
+import express from 'express';
+import { loginController, registerController } from '../controller/authController.js';
+import { protect } from '../middlewares/authMiddleware.js';
+
+const router = express.Router();
+
+router.post('/register', registerController);
+router.post('/login', protect, loginController);
+
+export default router;
